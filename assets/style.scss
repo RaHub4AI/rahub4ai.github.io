@@ -271,30 +271,30 @@ p > img {
 .masthead {
   padding: 20px 0;
   border-bottom: 1px solid $lightGray;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
   @include mobile {
+    flex-direction: column;
     text-align: center;
   }
 }
+
 .site-avatar {
-  float: none; // Remove float to allow full block rendering
-  width: 100%;
-  height: auto;
-  margin: 0 auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  width: 60px; // Adjust size as needed
+  height: 60px;
+  margin-right: 20px;
 
   img {
     width: 100%;
-    height: auto;
-    max-width: 400px; // Limit max size if needed
-    max-height: 400px;
-    border-radius: 12px;
+    height: 100%;
+    border-radius: 50%;
     object-fit: cover;
     display: block;
   }
 }
+
 
 .site-info {
   display: none;
@@ -308,25 +308,23 @@ p > img {
  display: none;
 }
 
+
 nav {
-  float: right;
-  margin-top: 23px; // @TODO: Vertically middle align
-  font-family: $helveticaNeue;
-  font-size: 18px;
+  margin-top: 0;
+  display: flex;
+  gap: 20px;
 
   @include mobile {
-    float: none;
     margin-top: 9px;
     display: block;
-    font-size: 16px;
+    text-align: center;
   }
 
   a {
-    margin-left: 20px;
     color: $darkGray;
-    text-align: right;
     font-weight: 300;
     letter-spacing: 1px;
+    font-size: 18px;
 
     @include mobile {
       margin: 0 10px;
