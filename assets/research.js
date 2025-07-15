@@ -47,14 +47,21 @@ function showPublications(year) {
   }
 
   const html = [`<h3>Publications - ${year}</h3>`];
-  pubs.forEach(pub => {
+  const abstractLimit = 400; // number of characters to show before "Read more"
+
+  pubs.forEach((pub, index) => {
+    const shortAbstract = pub.abstract.slice(0, abstractLimit);
+    const isLong = pub.abstract.length > abstractLimit;
+
     html.push(`
       <div style="margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 20px;">
         <h4><a href="${pub.url}" target="_blank">${pub.title}</a></h4>
         <p><strong>Authors:</strong> ${pub.authors}</p>
         <p><strong>Journal:</strong> ${pub.journal}</p>
         <img src="${pub.toc}" alt="TOC Graphic" style="max-width: 100%; margin: 10px 0;">
-        <p><strong>Abstract:</strong> ${pub.abstract}</p>
+        <p><strong>Abstract:</strong></p>
+        <p id="abstract-short-${index}">${shortAbstract}${isLong ? '... <a href="#" onclick="toggleAbstract(' + index + '); return false;" id="toggle-link-' + index + '">Read more</a>' : ''}</p>
+        <p id="abstract-full-${index}" style="display: none;">${pub.abstract} <a href="#" onclick="toggleAbstract(${index}); return false;" id="toggle-link-full-${index}">Read less</a></p>
       </div>
     `);
   });
@@ -67,3 +74,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const defaultYear = publications[currentYear] ? currentYear : years[0];
   showPublications(defaultYear);
 });
+
+function toggleAbstract(index) {
+  const shortEl = document.getElementById(`abstract-short-${index}`);
+  const fullEl = document.getElementById(`abstract-full-${index}`);
+
+  const isHidden = fullEl.style.display === "none";
+  fullEl.style.display = isHidden ? "block" : "none";
+  shortEl.style.display = isHidden ? "none" : "block";
+}
